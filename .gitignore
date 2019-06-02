@@ -184,3 +184,6 @@ FakesAssemblies/
 AFK/bin/
 AFK/obj/
 AFK/obj/
+/.vs
+/AFK/.vs/AFK/v16/Server/sqlite3
+/AFK/Ref

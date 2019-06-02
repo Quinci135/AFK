@@ -24,3 +24,9 @@ C:\Users\Alex\Documents\Github\AFK\AFK\bin\Release\Mono.Data.Sqlite.dll
 C:\Users\Alex\Documents\Github\AFK\AFK\obj\Release\AFK.csprojResolveAssemblyReference.cache
 C:\Users\Alex\Documents\Github\AFK\AFK\obj\Release\AFK.dll
 C:\Users\Alex\Documents\Github\AFK\AFK\obj\Release\AFK.pdb
+E:\OneDrive\Documents\GitHub\AFK\AFK\bin\Release\AFK.dll
+E:\OneDrive\Documents\GitHub\AFK\AFK\bin\Release\AFK.pdb
+E:\OneDrive\Documents\GitHub\AFK\AFK\obj\Release\AFK.csprojAssemblyReference.cache
+E:\OneDrive\Documents\GitHub\AFK\AFK\obj\Release\AFK.csproj.CoreCompileInputs.cache
+E:\OneDrive\Documents\GitHub\AFK\AFK\obj\Release\AFK.dll
+E:\OneDrive\Documents\GitHub\AFK\AFK\obj\Release\AFK.pdb
