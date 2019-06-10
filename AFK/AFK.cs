@@ -136,6 +136,7 @@ namespace AFK
 
         public void OnUpdate(EventArgs e)
         {
+            
             if ((DateTime.UtcNow - LastCheck).TotalSeconds >= 1)
             {
                 LastCheck = DateTime.UtcNow;
@@ -144,6 +145,8 @@ namespace AFK
                     {
                         if (player != null && player.TSPlayer != null && player.TSPlayer.IsLoggedIn && player.TSPlayer.Active && player.TSPlayer.ConnectionAlive)
                         {
+                            //player.TSPlayer.SendInfoMessage(player.TSPlayer.TPlayer.velocity.ToString());
+                            //player.TSPlayer.SendInfoMessage(player.afkkick.ToString());
                             if (AFKConfig.afkwarp || AFKConfig.afkkick)
                             {
                                 string currentregionlist = "";
@@ -154,16 +157,16 @@ namespace AFK
 
                                 if (AFKConfig.afkkick && !player.TSPlayer.Group.HasPermission("afk.nokick"))
                                 {
-                                    if ((player.TSPlayer.TileX == player.lasttileX && player.TSPlayer.TileY == player.lasttileY) || (afkwarp != null) && (player.TSPlayer.TileX == (int)afkwarp.Position.X && player.TSPlayer.TileY == (int)afkwarp.Position.Y))
+                                    if ((player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0) || (afkwarp != null) && (player.TSPlayer.TileX == (int)afkwarp.Position.X && player.TSPlayer.TileY == (int)afkwarp.Position.Y))
                                         player.afkkick++;
                                     else
                                         player.afkkick = 0;
 
                                     if (player.afkkick == Math.Round(AFKConfig.afkkicktime * .70) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .80) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .90))
-                                        player.TSPlayer.SendErrorMessage("You will be kicked when you're AFK for " + AFKConfig.afkkicktime + "secs. You have been AFK for " + player.afkkick + " secs.");
+                                        player.TSPlayer.SendErrorMessage("[Anti-AFK] You will be kicked after " + Convert.ToString(AFKConfig.afkkicktime - player.afkkick) + "secs. You have been AFK for " + player.afkkick + " secs.");
                                     else if (player.afkkick >= AFKConfig.afkkicktime)
                                     {
-                                        TShock.Utils.Kick(player.TSPlayer, "Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
+                                        TShock.Utils.Kick(player.TSPlayer, "[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
                                         return;
                                     }
                                 }
@@ -248,15 +251,19 @@ namespace AFK
             
             if (!string.IsNullOrWhiteSpace(e.Text))
             {
+                TShock.Log.ConsoleInfo("A");
+                if (Players[e.Who].TSPlayer == null)
+                    return;
                 if (Players[e.Who].TSPlayer.User == null)
                     return;
                 if (!Players[e.Who].TSPlayer.IsLoggedIn || !Players[e.Who].TSPlayer.Active || !Players[e.Who].TSPlayer.ConnectionAlive || !Players[e.Who].TSPlayer.RealPlayer || !Players[e.Who].TSPlayer.SilentJoinInProgress)
                     return;
+                TShock.Log.ConsoleInfo("B");
                 var msg = e.Buffer;
                 var text = e.Text;
                 var AFKPly = Players[e.Who];
                 string cmd = text.Split(' ')[0];
-
+                TShock.Log.ConsoleInfo("C");
                 if (AFKConfig.afkwarp || AFKConfig.afkkick)
                 {
                     if (cmd == "/afktime")
