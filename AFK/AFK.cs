@@ -157,17 +157,36 @@ namespace AFK
 
                                 if (AFKConfig.afkkick && !player.TSPlayer.Group.HasPermission("afk.nokick"))
                                 {
-                                    if ((player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0) || (afkwarp != null) && (player.TSPlayer.TileX == (int)afkwarp.Position.X && player.TSPlayer.TileY == (int)afkwarp.Position.Y))
-                                        player.afkkick++;
-                                    else
-                                        player.afkkick = 0;
-
-                                    if (player.afkkick == Math.Round(AFKConfig.afkkicktime * .70) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .80) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .90))
-                                        player.TSPlayer.SendErrorMessage("[Anti-AFK] You will be kicked after " + Convert.ToString(AFKConfig.afkkicktime - player.afkkick) + "secs. You have been AFK for " + player.afkkick + " secs.");
-                                    else if (player.afkkick >= AFKConfig.afkkicktime)
+                                    if (player.TSPlayer.TPlayer.onTrack)
                                     {
-                                        TShock.Utils.Kick(player.TSPlayer, "[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
+                                        if (player.TSPlayer.TileX <= player.lasttileX + 5 && player.lasttileX - 5 <= player.TSPlayer.TileX && player.TSPlayer.TileY <= player.lasttileY + 5 && player.lasttileY - 5 <= player.TSPlayer.TileY)
+                                            player.afkkick++;
+                                        else
+                                            player.afkkick = 0;
+
+                                        if (player.afkkick == Math.Round(AFKConfig.afkkicktime * .70) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .80) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .90))
+                                            player.TSPlayer.SendErrorMessage("[Anti-AFK] You will be kicked after " + Convert.ToString(AFKConfig.afkkicktime - player.afkkick) + "secs. You have been AFK for " + player.afkkick + " secs.");
+                                        else if (player.afkkick >= AFKConfig.afkkicktime)
+                                        {
+                                            TShock.Utils.Kick(player.TSPlayer, "[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
+                                            return;
+                                        }
                                         return;
+                                    }
+                                    else
+                                    {
+                                        if ((player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0) || (afkwarp != null) && (player.TSPlayer.TileX == (int)afkwarp.Position.X && player.TSPlayer.TileY == (int)afkwarp.Position.Y))
+                                            player.afkkick++;
+                                        else
+                                            player.afkkick = 0;
+
+                                        if (player.afkkick == Math.Round(AFKConfig.afkkicktime * .70) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .80) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .90))
+                                            player.TSPlayer.SendErrorMessage("[Anti-AFK] You will be kicked after " + Convert.ToString(AFKConfig.afkkicktime - player.afkkick) + "secs. You have been AFK for " + player.afkkick + " secs.");
+                                        else if (player.afkkick >= AFKConfig.afkkicktime)
+                                        {
+                                            TShock.Utils.Kick(player.TSPlayer, "[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
+                                            return;
+                                        }
                                     }
                                 }
 
@@ -178,7 +197,7 @@ namespace AFK
 
                                     if (player.lasttileX != 0 && player.lasttileY != 0 && !currentregionlist.Contains("afk"))
                                     {
-                                        if (player.TSPlayer.TileX == player.lasttileX && player.TSPlayer.TileY == player.lasttileY)
+                                        if (player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0)
                                             player.afk++;
                                         else
                                             player.afk = 0;
@@ -213,7 +232,7 @@ namespace AFK
                                         }
                                     }
 
-                                    if (!currentregionlist.Contains("afk") && player.afk > 0 && (player.TSPlayer.TileX == player.lasttileX && player.TSPlayer.TileY == player.lasttileY))
+                                    if (!currentregionlist.Contains("afk") && player.afk > 0 && (player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0))
                                     {
                                         if (TShock.Regions.GetRegionByName("afk") != null) //checks if afk region exists
                                         {
@@ -251,19 +270,19 @@ namespace AFK
             
             if (!string.IsNullOrWhiteSpace(e.Text))
             {
-                TShock.Log.ConsoleInfo("A");
+                //TShock.Log.ConsoleInfo("A");
                 if (Players[e.Who].TSPlayer == null)
                     return;
                 if (Players[e.Who].TSPlayer.User == null)
                     return;
                 if (!Players[e.Who].TSPlayer.IsLoggedIn || !Players[e.Who].TSPlayer.Active || !Players[e.Who].TSPlayer.ConnectionAlive || !Players[e.Who].TSPlayer.RealPlayer || !Players[e.Who].TSPlayer.SilentJoinInProgress)
                     return;
-                TShock.Log.ConsoleInfo("B");
+                //TShock.Log.ConsoleInfo("B");
                 var msg = e.Buffer;
                 var text = e.Text;
                 var AFKPly = Players[e.Who];
                 string cmd = text.Split(' ')[0];
-                TShock.Log.ConsoleInfo("C");
+                //TShock.Log.ConsoleInfo("C");
                 if (AFKConfig.afkwarp || AFKConfig.afkkick)
                 {
                     if (cmd == "/afktime")
