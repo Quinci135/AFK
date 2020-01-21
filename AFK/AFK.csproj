@@ -32,30 +32,6 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CustomWeaponAPI">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\CustomWeaponAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="HttpServer">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\HttpServer.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Mono.Data.Sqlite">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\Mono.Data.Sqlite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\MySql.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>D:\Downloads\Compressed\tshock_release\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="OTAPI">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\OTAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,13 +39,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>References\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OTAPI">
+      <HintPath>References\OTAPI.dll</HintPath>
+    </Reference>
     <Reference Include="TerrariaServer">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\TerrariaServer.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>References\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TShockAPI">
-      <HintPath>D:\Downloads\Compressed\tshock_4.3.26\source-ref\TShockAPI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>References\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

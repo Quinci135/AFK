@@ -143,7 +143,7 @@ namespace AFK
                 lock (Players)
                     foreach (Player player in Players)
                     {
-                        if (player != null && player.TSPlayer != null && player.TSPlayer.IsLoggedIn && player.TSPlayer.Active && player.TSPlayer.ConnectionAlive)
+                        if (player != null && player.TSPlayer != null && !AFKConfig.whitelistByName.Contains(player.TSPlayer.Name) && player.TSPlayer.Active && player.TSPlayer.ConnectionAlive)
                         {
                             //player.TSPlayer.SendInfoMessage(player.TSPlayer.TPlayer.velocity.ToString());
                             //player.TSPlayer.SendInfoMessage(player.afkkick.ToString());

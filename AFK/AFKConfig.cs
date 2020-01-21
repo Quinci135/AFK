@@ -13,6 +13,7 @@ namespace AFK
         public int afkspam = 20;
         public string awayMessage = "{player} is away from his/her keyboard and has been warped To The AFK Zone!";
         public string returnMessage = "{player} is back from AFK! YAY!!!";
+        public string[] whitelistByName = { "Rofle-Bot" };
 
         public static AFKConfigFile Read(string path)
         {
