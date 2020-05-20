@@ -145,6 +145,7 @@ namespace AFK
                     {
                         if (player != null && player.TSPlayer != null && !AFKConfig.whitelistByName.Contains(player.TSPlayer.Name) && player.TSPlayer.Active && player.TSPlayer.ConnectionAlive)
                         {
+                            //player.TSPlayer.SendInfoMessage($"X Velocity: {player.TSPlayer.TPlayer.velocity.X}\nY Velocity: {player.TSPlayer.TPlayer.velocity.Y}");
                             //player.TSPlayer.SendInfoMessage(player.TSPlayer.TPlayer.velocity.ToString());
                             //player.TSPlayer.SendInfoMessage(player.afkkick.ToString());
                             if (AFKConfig.afkwarp || AFKConfig.afkkick)
@@ -168,7 +169,7 @@ namespace AFK
                                             player.TSPlayer.SendErrorMessage("[Anti-AFK] You will be kicked after " + Convert.ToString(AFKConfig.afkkicktime - player.afkkick) + "secs. You have been AFK for " + player.afkkick + " secs.");
                                         else if (player.afkkick >= AFKConfig.afkkicktime)
                                         {
-                                            TShock.Utils.Kick(player.TSPlayer, "[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
+                                            player.TSPlayer.Kick("[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
                                             return;
                                         }
                                         return;
@@ -184,7 +185,7 @@ namespace AFK
                                             player.TSPlayer.SendErrorMessage("[Anti-AFK] You will be kicked after " + Convert.ToString(AFKConfig.afkkicktime - player.afkkick) + "secs. You have been AFK for " + player.afkkick + " secs.");
                                         else if (player.afkkick >= AFKConfig.afkkicktime)
                                         {
-                                            TShock.Utils.Kick(player.TSPlayer, "[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
+                                            player.TSPlayer.Kick("[Anti-AFK] Being AFK for " + player.afkkick + " seconds.", true, false, null, true);
                                             return;
                                         }
                                     }
@@ -197,7 +198,7 @@ namespace AFK
 
                                     if (player.lasttileX != 0 && player.lasttileY != 0 && !currentregionlist.Contains("afk"))
                                     {
-                                        if (player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0)
+                                        if (player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y <= 0.01 && player.TSPlayer.TPlayer.velocity.Y >= -0.01)
                                             player.afk++;
                                         else
                                             player.afk = 0;
@@ -206,7 +207,7 @@ namespace AFK
                                         {
                                             if (!player.TSPlayer.IsLoggedIn)
                                             {
-                                                TShock.Utils.Kick(player.TSPlayer, "for being AFK.", true, false, "Server", true);
+                                                player.TSPlayer.Kick("for being AFK.", true, false, "Server", true);
                                                 return;
                                             }
                                             player.backtileX = player.TSPlayer.TileX;
@@ -215,7 +216,7 @@ namespace AFK
 
                                             if (afkwarp == null)
                                             {
-                                                TShock.Utils.Kick(player.TSPlayer, "for being AFK.", true, false, "Server", true);
+                                                player.TSPlayer.Kick("for being AFK.", true, false, "Server", true);
                                                 TShock.Log.ConsoleError("AFK Plugin: Warp \"afk\" is not defined.");
                                                 return;
                                             }
@@ -232,7 +233,7 @@ namespace AFK
                                         }
                                     }
 
-                                    if (!currentregionlist.Contains("afk") && player.afk > 0 && (player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y == 0))
+                                    if (!currentregionlist.Contains("afk") && player.afk > 0 && (player.TSPlayer.TPlayer.velocity.X == 0 && player.TSPlayer.TPlayer.velocity.Y <= 0.01 && player.TSPlayer.TPlayer.velocity.Y >= -0.01))
                                     {
                                         if (TShock.Regions.GetRegionByName("afk") != null) //checks if afk region exists
                                         {
@@ -273,7 +274,7 @@ namespace AFK
                 //TShock.Log.ConsoleInfo("A");
                 if (Players[e.Who].TSPlayer == null)
                     return;
-                if (Players[e.Who].TSPlayer.User == null)
+                if (Players[e.Who].TSPlayer.Account == null)
                     return;
                 if (!Players[e.Who].TSPlayer.IsLoggedIn || !Players[e.Who].TSPlayer.Active || !Players[e.Who].TSPlayer.ConnectionAlive || !Players[e.Who].TSPlayer.RealPlayer || !Players[e.Who].TSPlayer.SilentJoinInProgress)
                     return;
